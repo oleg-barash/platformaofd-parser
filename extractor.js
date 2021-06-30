@@ -33,7 +33,7 @@ function loadScript(url, callback){
 (function() {
    'use strict';
    window.parseMoney = (val) => {
-      return parseFloat(val.replace(/([ ,₽])/gm, ''));
+      return parseFloat(val.replace(/[ ₽]/gm, '').replace(',', '.'));
    }
 
    window.push = (newItem) => {
@@ -80,8 +80,7 @@ function loadScript(url, callback){
    window.moveNext = () => {
       let form = $("#cheques_filter_form_id")[0];
       loadScript('https://momentjs.com/downloads/moment.js', () => {
-         form.start.value = moment(form.start.value, "DD.MM.YYYY hh:mm").add(1, 'day').format("DD.MM.YYYY 00:00");
-         form.end.value = moment(form.start.value, "DD.MM.YYYY hh:mm").add(1, 'day').format("DD.MM.YYYY 00:00");
+         form.end.value = form.start.value = moment(form.start.value, "DD.MM.YYYY hh:mm").add(1, 'day').format("DD.MM.YYYY 00:00");
          form.submit();
       });
    }
